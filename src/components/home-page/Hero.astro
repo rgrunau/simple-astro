@@ -1,0 +1,66 @@
+---
+import LinkCard from './LinkCard.astro';
+
+export const routes = [
+  {
+    name: "Blog",
+    path: "/blog",
+  },
+  {
+    name: "Projects",
+    path: "/projects",
+  },
+  {
+    name: "About",
+    path: "/about",
+  },
+  {
+    name: "Contact",
+    path: "/contact",
+  },
+];
+---
+
+
+		<div class="hero-text">
+			<div>
+				<h1>Hi, I'm Robert Grunau</h1>
+			</div>
+			<div>
+				<h2>I love building User Interfaces and thinking about products</h2>
+			</div>
+			<div>
+				<p>I also think my website should be simple as hell.</p>
+			</div>
+		</div>
+		<div class="hero-nav">
+			{routes.map(route => (
+				<LinkCard
+          name={route.name}
+          path={route.path}
+        />
+			))}
+		</div>
+
+<style>
+  	.hero-text {
+		width: 45%;
+		display: flex;
+		flex-flow: wrap row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+	.hero-text h1 {
+		font-size: 4rem;
+	}
+
+	.hero-nav {
+		width: 40%;
+		display: flex;
+		flex-flow: wrap row;
+		justify-content: space-between;
+		align-items: center;
+	}
+
+</style>
