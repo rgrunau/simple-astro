@@ -1,0 +1,66 @@
+---
+
+interface Props {
+  slug: string;
+  image: string;
+  alt: string;
+}
+
+const { slug, image, alt }: Props = Astro.props;
+
+---
+
+<section>
+  <div class="projects-header">
+    <h2>Featured Project</h2>
+  </div>
+  <div class="project-container">
+    <a href={`projects/${slug}`}>
+      <img src={image} alt={alt}/>
+    </a>
+  </div>
+</section>
+
+
+<style>
+  section {
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 20px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .projects-header {
+    width: 50%;
+    margin-bottom: 1rem;
+  }
+
+  .project-container {
+    width: 35%;
+    margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .project-container a {
+    width: 75%;
+    display: block;
+  }
+
+
+  @media screen and (max-width: 932px) {
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+    }
+  }
+</style>

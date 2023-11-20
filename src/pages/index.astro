@@ -2,13 +2,13 @@
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/home-page/Hero.astro';
 import {getDatoCMSData} from '../api/dato-api';
+import ProjectsSection from '../components/home-page/ProjectsSection.astro';
 
 const query = `
 	 query HomePage {
 		   homepage {
     title
     subTitle
-		tagline
     shortBio(markdown: true)
     featuredProject {
       slug
@@ -22,7 +22,7 @@ const query = `
       }
     }
   }
-}
+	}
 `
 
 const data = await getDatoCMSData(query);
@@ -34,7 +34,11 @@ const {homepage} = data;
 		<section>
 			<Hero title={homepage.title} subtitle={homepage.subTitle} tagline={homepage.tagline}/>
 		</section>
-	
+		<ProjectsSection 
+			slug={homepage.featuredProject.slug} 
+			image={homepage.featuredProject.coverImage.responsiveImage.src} 
+			alt={homepage.featuredProject.coverImage.title}
+		/>
 	</main>
 </Layout>
 
@@ -59,23 +63,45 @@ const {homepage} = data;
 		line-height: 1.6;
 		display: flex;
 		flex-direction: row;
-		justify-content: center;
+		justify-content: space-between;
 		align-items: center;
 	}
 
 
-	@media screen and (max-width: 932px) {
-		main {
-			display: flex;
-			flex-direction: column;
-			padding: 0.25rem;
-		}
-		section {
-			display: flex;
-			flex-direction: column;
-			align-items: start;
-			justify-content: start;
-		}
+	@media screen and (max-width: 600px) {
+	main {
+		display: flex;
+		flex-direction: column;
+	}
+
+	section {
+    margin: 1rem auto;
+    padding: 1rem;
+    width: 100%;
+    max-width: 1200px;
+    font-size: 20px;
+    line-height: 1.6;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  @media screen and (max-width: 932px) {
+    main {
+      display: flex;
+      flex-direction: column;
+      padding: 0.25rem;
+    }
+    section {
+      display: flex;
+      flex-direction: column;
+      align-items: start;
+      justify-content: start;
+    }
+  }
+		
 	}
 
 </style>
