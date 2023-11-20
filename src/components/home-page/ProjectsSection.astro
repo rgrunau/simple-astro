@@ -12,14 +12,23 @@ const { slug, image, alt, title }: Props = Astro.props;
 ---
 
 <section>
-  <div class="projects-header">
-    <h2>Featured Project</h2>
+  <div class="text-side">
+    <div class="projects-header">
+      <h2 >Featured Projects</h2>
+    </div>
+    <article>
+      <p>
+        Here's a project personal or freelance that I've worked on, or is currently in development.
+      </p>
+    </article>
   </div>
-  <div class="project-container">
-    <a href={`projects/${slug}`}>
-      <img src={image} alt={alt}/>
-      <p>{title}</p>
-    </a>
+  <div class="project-side">
+    <div class="project-container">
+      <a href={`projects/${slug}`}>
+        <img src={image} alt={alt}/>
+        <p>{title}</p>
+      </a>
+    </div>
   </div>
 </section>
 
@@ -38,14 +47,29 @@ const { slug, image, alt, title }: Props = Astro.props;
     align-items: center;
   }
 
-  .projects-header {
+  .text-side {
+    width: 50%;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  .project-side {
     width: 50%;
     margin-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .projects-header {
+    width: 50%;
   }
 
   .project-container {
-    width: 35%;
-    margin-bottom: 1rem;
+    width: 60%;
     display: flex;
     justify-content: center;
     align-items: center;
