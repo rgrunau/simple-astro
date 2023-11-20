@@ -1,12 +1,40 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import Hero from '../components/home-page/Hero.astro';
+import {getDatoCMSData} from '../api/dato-api';
 
+const query = `
+	 query HomePage {
+		   homepage {
+    title
+    subTitle
+		tagline
+    shortBio(markdown: true)
+    featuredProject {
+      slug
+      title
+      coverImage {
+        responsiveImage {
+          src
+          srcSet
+          webpSrcSet
+        }
+      }
+    }
+  }
+}
+`
+
+const data = await getDatoCMSData(query);
+const {homepage} = data;
 ---
 
 <Layout title="Robert Grunau">
 	<main>
-		<Hero/>
+		<section>
+			<Hero title={homepage.title} subtitle={homepage.subTitle} tagline={homepage.tagline}/>
+		</section>
+	
 	</main>
 </Layout>
 
@@ -19,19 +47,35 @@ import Hero from '../components/home-page/Hero.astro';
 		font-size: 20px;
 		line-height: 1.6;
 		display: flex;
+		flex-direction: column;
+	}
+
+	section {
+		margin: 1rem auto;
+		padding: 1rem;
+		width: 100%;
+		max-width: 1200px;
+		font-size: 20px;
+		line-height: 1.6;
+		display: flex;
 		flex-direction: row;
-		justify-content: space-between;
+		justify-content: center;
 		align-items: center;
 	}
 
 
-
-	@media screen and (max-width: 600px) {
+	@media screen and (max-width: 932px) {
 		main {
 			display: flex;
 			flex-direction: column;
+			padding: 0.25rem;
 		}
-		
+		section {
+			display: flex;
+			flex-direction: column;
+			align-items: start;
+			justify-content: start;
+		}
 	}
 
 </style>
