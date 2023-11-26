@@ -31,7 +31,7 @@ export interface BlogPost {
     <h2>More Posts</h2>
   </div>
   <ul>
-    {posts?.map((post) => (
+    {posts?.map((post: BlogPost) => (
       <li>
         <a href={`/blog/${post?.slug}`}>{post?.title}</a>
         <p>{post?.publishedDate}</p>
