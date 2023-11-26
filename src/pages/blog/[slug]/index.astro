@@ -1,0 +1,94 @@
+---
+import { getDatoCMSData } from "../../../api/dato-api";
+import Layout from "../../../layouts/Layout.astro";
+
+const {slug} = Astro.params;
+
+const query = `
+  query blogPostBySlug($slug: String!) {
+    blogPost(filter: {slug: {eq: $slug}}) {
+      postHero {
+        responsiveImage {
+          aspectRatio
+          alt
+          base64
+          bgColor
+          height
+          sizes
+          src
+          srcSet
+          webpSrcSet
+          width
+        }
+      }
+      publishedDate
+      title
+      postText(markdown: true)
+    }
+  }`
+
+  const data = await getDatoCMSData(query, {slug});
+  const {blogPost} = data;
+---
+
+
+<Layout title={`${slug} | Robert Grunau`}>
+  <div class="container">
+    <main id="mainContent">
+      <div>
+        <h1>{blogPost?.title}</h1>
+        <p>{blogPost?.publishedDate}</p>
+      </div>
+      <article set:html={blogPost?.postText}/>
+    </main>
+    <aside>
+      <h2>Aside</h2>
+    </aside>
+  </div>
+</Layout>
+
+
+<style>
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    padding: 1rem 1.5rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  aside {
+    width: 15%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  article {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem 0;
+  }
+
+  @media screen and (max-width: 944px) {
+    main {
+      width: 100%;
+    }
+    aside {
+      display: none;
+    }
+  }
+</style>
