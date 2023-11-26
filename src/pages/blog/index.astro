@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro'
 import { getDatoCMSData } from '../../api/dato-api'
+import { BlogPost } from '../../const/interfaces';
 
 const query = `
   query allPosts {
@@ -19,7 +20,7 @@ const { allBlogPosts } = data;
 <Layout title="Blog | Robert Grunau">
   <main>
     <ul>
-      {allBlogPosts.map((post) => (
+      {allBlogPosts.map((post: BlogPost) => (
         <li>
           <a href={`/blog/${post.slug}`}>
             <div>

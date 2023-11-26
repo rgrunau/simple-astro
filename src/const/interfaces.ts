@@ -15,4 +15,5 @@ export interface BlogPost {
   title: string;
   slug: string;
   postHero: ResponsiveImage;
+  excerpt: string;
 }
