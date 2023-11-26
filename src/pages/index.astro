@@ -12,6 +12,19 @@ const query = `
     		subTitle
 				tagline
     		shortBio(markdown: true)
+				heroImage {
+					alt
+					responsiveImage {
+						src
+						srcSet
+						webpSrcSet
+						width
+						height
+						aspectRatio
+						base64
+						bgColor
+					}
+    		}
     		featuredProject {
       		slug
       		title
@@ -19,7 +32,7 @@ const query = `
         		responsiveImage {
           		src
           		srcSet
-          	webpSrcSet
+          		webpSrcSet
         	}
       	}
     	}
@@ -39,7 +52,12 @@ const {homepage, allBlogPosts} = data;
 <Layout title="Robert Grunau">
 	<main>
 		<section>
-			<Hero title={homepage.title} subtitle={homepage.subTitle} tagline={homepage.tagline}/>
+			<Hero 
+				title={homepage.title} 
+				subtitle={homepage.subTitle} 
+				tagline={homepage.tagline}
+				heroImage={homepage.heroImage.responsiveImage}
+			/>
 		</section>
 		<ProjectsSection 
 			slug={homepage.featuredProject.slug} 
