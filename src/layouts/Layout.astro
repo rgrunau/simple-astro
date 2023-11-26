@@ -46,10 +46,25 @@ const { title } = Astro.props;
   box-sizing: border-box;
 }
 
+@keyframes Gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
 body {
 	font-family: "calling-code", sans-serif;
 	font-weight: 400;
 	font-style: normal;
+	background: linear-gradient(to bottom, white, rgb(246, 240, 231), rgba(0, 0, 0, 0.2));
+	background-size: 200% 200%;
+  animation: Gradient 10s ease infinite;
 }
 
 /* Remove default margin */
