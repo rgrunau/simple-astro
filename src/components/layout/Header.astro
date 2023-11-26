@@ -8,7 +8,7 @@ import { routes } from "../../const/const";
   <div class="header-container">
     <div class="masthead">
       <div>
-        <a href="/">
+        <a aria-label="home" href="/">
           Robert Grunau
         </a>
       </div>
@@ -16,7 +16,7 @@ import { routes } from "../../const/const";
     <div>
       <nav>
         {routes.map(route => (
-          <a href={route.path}>{route.name}</a>
+          <a aria-label={route.name} href={route.path}>{route.name}</a>
         ))}
       </nav>
     </div>
