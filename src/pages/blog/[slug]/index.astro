@@ -1,5 +1,6 @@
 ---
 import { getDatoCMSData } from "../../../api/dato-api";
+import BlogAside from "../../../components/blog-post/BlogAside.astro";
 import Layout from "../../../layouts/Layout.astro";
 
 const {slug} = Astro.params;
@@ -25,25 +26,35 @@ const query = `
       title
       postText(markdown: true)
     }
+    morePosts: allBlogPosts(orderBy: publishedDate_DESC, first: 10, filter: {slug: {neq: $slug}}) {
+      title
+      slug
+      publishedDate
+    }
   }`
 
   const data = await getDatoCMSData(query, {slug});
-  const {blogPost} = data;
+  const {blogPost, morePosts} = data;
 ---
 
 
 <Layout title={`${slug} | Robert Grunau`}>
   <div class="container">
     <main id="mainContent">
-      <div>
+      <div class="blog-hero-container">
+        <picture class="blog-hero-img">
+          <source srcset={blogPost?.postHero?.responsiveImage?.webpSrcSet} type="image/webp"/>
+          <source srcset={blogPost?.postHero?.responsiveImage?.srcSet} type="image/jpeg"/>
+          <img src={blogPost?.postHero?.responsiveImage?.src} alt={blogPost?.postHero?.responsiveImage?.alt}/>
+        </picture>
+      </div>
+      <div class="date-title">
         <h1>{blogPost?.title}</h1>
         <p>{blogPost?.publishedDate}</p>
       </div>
       <article set:html={blogPost?.postText}/>
     </main>
-    <aside>
-      <h2>Aside</h2>
-    </aside>
+    <BlogAside posts={morePosts}/>
   </div>
 </Layout>
 
@@ -69,8 +80,19 @@ const query = `
     align-items: flex-start;
   }
 
-  aside {
-    width: 15%;
+
+
+  .blog-hero-container {
+    width: 100%;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .date-title {
+    width: 100%;
+    margin: 1rem 0;
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -87,8 +109,9 @@ const query = `
     main {
       width: 100%;
     }
-    aside {
-      display: none;
+
+    h1 {
+      font-size: 1.5rem;
     }
   }
 </style>
