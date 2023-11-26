@@ -32,11 +32,11 @@ const { title, subtitle, tagline, heroImage } = Astro.props
 	</div>
 </div>
 <div class="hero-img-container">
-<picture>
-  <source media="(max-width: 799px)" srcset={`${heroImage.src}?w=799`}>
-  <source media="(min-width: 800px)" srcset={`${heroImage.src}?w=1200`}>
-  <img src={heroImage.src} alt={heroImage.alt} height={heroImage.height} width={heroImage.width} style="width: 100%; height: auto;">
-</picture>
+	<picture class="hero-img">
+		<source media="(max-width: 799px)" srcset={`${heroImage.src}?w=799`}>
+		<source media="(min-width: 800px)" srcset={`${heroImage.src}?w=1200`}>
+		<img src={heroImage.src} alt={heroImage.alt} height={heroImage.height} width={heroImage.width} style="width: 100%; height: auto;">
+	</picture>
 </div>
 
 <style>
@@ -68,6 +68,14 @@ const { title, subtitle, tagline, heroImage } = Astro.props
 		flex-flow: wrap row;
 		justify-content: space-between;
 		align-items: center;
+		border-radius: 0.5rem;
+		box-shadow: 2px 2px 20px var(--site-orange);
+	}
+
+	.hero-img img{
+		width: 100%;
+		height: auto;
+		border-radius: 0.5rem;
 	}
 
 	@media screen and (max-width: 844px) {

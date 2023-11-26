@@ -73,20 +73,51 @@ const { slug, image, alt, title }: Props = Astro.props;
     display: flex;
     justify-content: center;
     align-items: center;
+    margin-top: 2rem;
   }
 
   .project-container a {
     width: 75%;
     display: block;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s ease-in-out;
+    border-bottom: 2px solid transparent;
   }
 
+  .project-container a p {
+    margin-top: 1rem;
+    font-size: 1.75rem;
+    text-align: center;
+  }
 
-  @media screen and (max-width: 932px) {
+  .project-container a:hover {
+    border-bottom: 2px solid var(--site-orange);
+  }
+
+  @media screen and (max-width: 944px) {
     section {
       display: flex;
       flex-direction: column;
       align-items: start;
       justify-content: start;
+    }
+
+    .text-side {
+      width: 100%;
+      margin-bottom: 2rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+
+    .project-side {
+      width: 100%;
+      margin-bottom: 1rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     .projects-header {
@@ -95,6 +126,15 @@ const { slug, image, alt, title }: Props = Astro.props;
 
     .project-container {
       width: 100%;
+    }
+
+    .project-container a {
+      width: 100%;
+      display: block;
+      text-decoration: none;
+      color: var(--text-color);
+      transition: all 0.2s ease-in-out;
+      border-bottom: 2px solid transparent;
     }
   }
 </style>
