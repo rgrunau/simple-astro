@@ -1,0 +1,91 @@
+---
+import Layout from '../../layouts/Layout.astro'
+import { getDatoCMSData } from '../../api/dato-api'
+
+const query = `
+  query allPosts {
+    allBlogPosts {
+      publishedDate
+      slug
+      title
+      excerpt(markdown: true)
+    }
+  }
+`
+const data = await getDatoCMSData(query);
+const { allBlogPosts } = data;
+---
+
+<Layout title="Blog | Robert Grunau">
+  <main>
+    <ul>
+      {allBlogPosts.map((post) => (
+        <li>
+          <a href={`/blog/${post.slug}`}>
+            <div>
+              <h2>
+                {post.title}
+              </h2>
+            </div>
+            <div class="pub-date">
+              {post.publishedDate}
+            </div>
+            <article set:html={post.excerpt}/>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Layout>
+
+<style>
+  main {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    margin: 0 auto;
+    padding: 0 1rem;
+  }
+  ul {
+    list-style: none;
+    padding: 0 0.5rem;
+  }
+
+  li {
+    margin: 1rem 0;
+    padding: 2rem 0;
+    border-bottom: 1px solid var(--site-orange);
+  }
+
+  li a {
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  li a h2 {
+    font-size: 2rem;
+    margin: 0;
+  }
+
+  .pub-date {
+    font-size: 1rem;
+    color: var(--color-text-light);
+    margin: 1rem 0;
+  }
+  article {
+    margin-top: 0.5rem;
+    font-size: 1rem;
+    line-height: 1.5rem;
+  }
+
+  @media screen and (max-width: 944px){
+    li a h2 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
