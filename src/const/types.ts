@@ -1,4 +1,4 @@
-type ResponsiveImage = {
+interface ResponsiveImage {
   aspectRatio: number;
   base64: string;
   height: number;
@@ -8,11 +8,11 @@ type ResponsiveImage = {
   width: number;
   webpSrcSet: string;
   alt: string;
-};
+}
 
-export type BlogPost = {
+export interface BlogPost {
   publishedDate: string;
   title: string;
   slug: string;
   postHero: ResponsiveImage;
-};
+}
