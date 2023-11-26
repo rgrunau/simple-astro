@@ -50,6 +50,12 @@ const currentYear = new Date().getFullYear();
     color: var(--site-orange);
     text-decoration: none;
     margin: 0 0.5rem;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s ease-in-out;
+  }
+
+  .social-container a:hover {
+    border-bottom: 2px solid var(--dark-text);
   }
 
   @media screen and (max-width: 944px) {
