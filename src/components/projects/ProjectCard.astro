@@ -1,0 +1,72 @@
+---
+import type { Project } from '../../const/interfaces';
+interface Props {
+  project: Project;
+
+}
+
+const { project } = Astro.props;
+---
+
+<li>
+  <a href={`/projects/${project.slug}`}>
+    <div>
+      <picture>
+        <source
+          srcset={project.coverImage.responsiveImage.webpSrcSet}
+          media="(min-width: 800px)"
+          type="image/webp"
+        />
+        <source
+          srcset={project.coverImage.responsiveImage.srcSet}
+          media="(max-width: 799px)"
+          type="image/jpeg"
+        />
+        <img
+          src={project.coverImage.responsiveImage.src}
+          alt={project.coverImage.responsiveImage.alt}
+          width={project.coverImage.responsiveImage.width}
+          height={project.coverImage.responsiveImage.height}
+          style="width: 100%; height: auto;"
+        />
+      </picture>  
+    </div>
+    <div>
+      <h2>{project.title}</h2>
+    </div>
+  </a>
+</li>
+
+<style>
+    li {
+    margin: 1rem ;
+    padding: 0;
+    width: 33.33%;
+  }
+
+  li a {
+    color: var(--dark-text);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  li a:hover {
+    color: var(--site-orange);
+    text-decoration: underline;
+    border-bottom: 2px solid var(--site-orange);
+  }
+
+  @media screen and (max-width: 944px) {
+    li {
+      width: 100%;
+    }
+  }
+</style>

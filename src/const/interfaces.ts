@@ -19,3 +19,10 @@ export interface BlogPost {
   postHero: ResponsiveImage;
   excerpt: string;
 }
+
+export type Project = {
+  featured: boolean;
+  slug: string;
+  title: string;
+  coverImage: ResponsiveImage;
+};
