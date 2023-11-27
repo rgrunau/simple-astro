@@ -1,0 +1,67 @@
+---
+import { BlogPost } from '../../const/interfaces'
+ interface Props {
+  posts: BlogPost[]
+ }
+
+ const { posts } = Astro.props
+---
+
+ <aside>
+  <div>
+    <h2>More Posts</h2>
+  </div>
+  <ul>
+    {posts?.map((post: BlogPost) => (
+      <li>
+        <a href={`/blog/${post?.slug}`}>{post?.title}</a>
+        <p>{post?.publishedDate}</p>
+      </li>
+    ))}
+  </ul>
+</aside>
+
+<style>
+  aside {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    align-items: flex-end;
+  }
+
+  li {
+    margin: 1rem 0;
+  }
+
+  li a {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: var(--text-dark);
+  }
+
+  @media screen and (max-width: 944px) {
+    aside {
+      width: 100%;
+      margin-top: 2rem;
+    }
+
+    ul {
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+      overflow: scroll;
+    }
+  }
+</style>

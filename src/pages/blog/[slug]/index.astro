@@ -1,0 +1,122 @@
+---
+import { getDatoCMSData } from "../../../api/dato-api";
+import BlogAside from "../../../components/blog-post/BlogAside.astro";
+import Layout from "../../../layouts/Layout.astro";
+
+const {slug} = Astro.params;
+
+const query = `
+  query blogPostBySlug($slug: String!) {
+    blogPost(filter: {slug: {eq: $slug}}) {
+      postHero {
+        responsiveImage {
+          aspectRatio
+          alt
+          base64
+          bgColor
+          height
+          sizes
+          src
+          srcSet
+          webpSrcSet
+          width
+        }
+      }
+      publishedDate
+      title
+      postText(markdown: true)
+    }
+    morePosts: allBlogPosts(orderBy: publishedDate_DESC, first: 10, filter: {slug: {neq: $slug}}) {
+      title
+      slug
+      publishedDate
+    }
+  }`
+
+  const data = await getDatoCMSData(query, {slug});
+  const {blogPost, morePosts} = data;
+---
+
+
+<Layout title={`${slug} | Robert Grunau`}>
+  <div class="container">
+    <main id="mainContent">
+      <div class="blog-hero-container">
+        <picture class="blog-hero-img">
+          <source srcset={blogPost?.postHero?.responsiveImage?.webpSrcSet} type="image/webp"/>
+          <source srcset={blogPost?.postHero?.responsiveImage?.srcSet} type="image/jpeg"/>
+          <img src={blogPost?.postHero?.responsiveImage?.src} alt={blogPost?.postHero?.responsiveImage?.alt}/>
+        </picture>
+      </div>
+      <div class="date-title">
+        <h1>{blogPost?.title}</h1>
+        <p>{blogPost?.publishedDate}</p>
+      </div>
+      <article set:html={blogPost?.postText}/>
+    </main>
+    <BlogAside posts={morePosts}/>
+  </div>
+</Layout>
+
+
+<style>
+  .container {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    padding: 1rem 1.5rem;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  main {
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+
+
+  .blog-hero-container {
+    width: 100%;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+  .date-title {
+    width: 100%;
+    margin: 1rem 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+  }
+
+  article {
+    width: 100%;
+    max-width: 800px;
+    padding: 1rem 0;
+  }
+
+  @media screen and (max-width: 944px) {
+    .container {
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: flex-start;
+    }
+    main {
+      width: 100%;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+    }
+  }
+</style>
