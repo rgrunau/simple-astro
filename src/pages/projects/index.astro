@@ -1,0 +1,129 @@
+---
+import { getDatoCMSData } from "../../api/dato-api";
+import type { ResponsiveImage } from "../../const/interfaces";
+import Layout from "../../layouts/Layout.astro";
+
+type Project = {
+  featured: boolean;
+  slug: string;
+  title: string;
+  coverImage: ResponsiveImage;
+};
+
+const query = `
+  query Projects {
+    allProjects(orderBy: createdAt_DESC) {
+      featured
+      slug
+      title
+      coverImage {
+        responsiveImage {
+          alt
+          aspectRatio
+          base64
+          bgColor
+          height
+          src
+          srcSet
+          webpSrcSet
+          width
+        }
+      }
+    }
+  }
+`
+
+const data = await getDatoCMSData(query);
+const { allProjects } = data;
+
+
+---
+
+<Layout title="Projects | Robert Grunau">
+  <main id="mainContent">
+    <ul>
+      {allProjects.map((project: Project) => (
+        <li>
+          <a href={`/projects/${project.slug}`}>
+            <div>
+              <picture>
+                <source
+                  srcset={project.coverImage.responsiveImage.webpSrcSet}
+                  media="(min-width: 800px)"
+                  type="image/webp"
+                />
+                <source
+                  srcset={project.coverImage.responsiveImage.srcSet}
+                  media="(max-width: 799px)"
+                  type="image/jpeg"
+                />
+                <img
+                  src={project.coverImage.responsiveImage.src}
+                  alt={project.coverImage.responsiveImage.alt}
+                  width={project.coverImage.responsiveImage.width}
+                  height={project.coverImage.responsiveImage.height}
+                  style="width: 100%; height: auto;"
+                />
+              </picture>  
+            </div>
+            <div>
+              <h2>{project.title}</h2>
+            </div>
+          </a>
+        </li>
+      ))}
+    </ul>
+  </main>
+</Layout>
+
+
+<style>
+  main {
+    width: 100%;
+    max-width: 1200px;
+    min-height: 90vh;
+    padding: 1rem 2rem;
+    margin: 0 auto;
+  }
+
+  ul {
+    display: flex;
+    flex-flow: wrap row;
+    align-items: flex-start;
+    justify-content: space-between;
+    list-style: none;
+    padding: 1rem 1.5rem;
+    margin: 0;
+  }
+
+  li {
+    margin: 1rem ;
+    padding: 0;
+    width: 33.33%;
+  }
+
+  li a {
+    color: var(--dark-text);
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.5;
+    border-bottom: 2px solid transparent;
+    transition: border-bottom 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
+  li a:hover {
+    color: var(--site-orange);
+    text-decoration: underline;
+    border-bottom: 2px solid var(--site-orange);
+  }
+  @media (max-width: 944px) {
+    main {
+      padding: 0.5rem 1rem;
+    }
+  }
+</style>
